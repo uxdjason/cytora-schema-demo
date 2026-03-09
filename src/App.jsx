@@ -161,7 +161,7 @@ function App() {
             <span>Files</span>
             <span>Analytics</span>
           </div>
-          <span className="demo-disclaimer">Disclaimer: This is a technical mockup built for an interview, not the real Cytora platform.</span>
+          <span className="demo-disclaimer" style="color:red;">Disclaimer: This is a technical mockup built for an interview, not the real Cytora platform.</span>
         </div>
         <div className="nav-right">
           <div className="search-bar">
