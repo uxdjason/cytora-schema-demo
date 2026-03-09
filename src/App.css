@@ -11,8 +11,25 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .nav-links span { margin-right: 24px; color: #828d99; font-size: 14px; font-weight: 500; cursor: pointer; padding: 18px 0; }
 .nav-links span.active { color: #0a58ca; border-bottom: 2px solid #0a58ca; }
 
-.search-bar { display: flex; align-items: center; border: 1px solid #e2e8f0; border-radius: 4px; padding: 4px 8px; margin-right: 24px; }
-.search-bar input { border: none; outline: none; font-size: 12px; width: 180px; color: #666; }
+.search-bar { 
+    display: flex; 
+    align-items: center; 
+    border: 1px solid #e2e8f0; 
+    border-radius: 4px; 
+    padding: 4px 8px; 
+    margin-right: 24px; 
+    background-color: #ffffff; /* 배경색 하얀색으로 명시 */
+  }
+  
+  .search-bar input { 
+    border: none; 
+    outline: none; 
+    font-size: 12px; 
+    width: 180px; 
+    color: #333; 
+    background-color: transparent; /* 기본 다크모드 스타일 무시하고 투명하게 */
+    color-scheme: light; /* 브라우저 다크모드 강제 해제 */
+  }
 .search-icon { font-size: 12px; color: #999; }
 .user-profile { display: flex; align-items: center; font-size: 13px; color: #555; }
 .avatar { background-color: #0d6efd; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 11px; margin-left: 12px; font-weight: bold; }
@@ -33,7 +50,7 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 
 /* 메인 콘텐츠 영역 */
 .main-content { flex: 1; padding: 24px 32px; overflow-y: auto; background: white; }
-.content-section { max-width: 1200px; }
+.content-section { max-width: 100%; }
 .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
 .content-section h2 { font-size: 20px; font-weight: 500; color: #333; margin-bottom: 8px; }
 .subtitle { color: #666; font-size: 13px; line-height: 1.5; max-width: 800px; }
