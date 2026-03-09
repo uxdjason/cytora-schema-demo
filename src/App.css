@@ -68,7 +68,7 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .content-section { max-width: 100%; }
 .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
 .content-section h2 { font-size: 20px; font-weight: 500; color: #333; margin-bottom: 8px; }
-.subtitle { color: #666; font-size: 13px; line-height: 1.5; max-width: 800px; }
+.subtitle { color: #666; font-size: 13px; line-height: 1.5; max-width: 100%; }
 
 /* 버튼 스타일 */
 .primary-btn { background: #0d6efd; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; }
@@ -138,7 +138,7 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .col-date { flex: 1; }
 .col-status { flex: 1; display: flex; align-items: center; }
 .col-output { flex: 1; }
-.col-action { width: 120px; text-align: right; display: flex; justify-content: flex-end; align-items: center; }
+.col-action { width: 200px; text-align: right; display: flex; justify-content: flex-end; align-items: center; }
 .col-check { width: 40px; }
 
 /* 유틸리티 클래스 */
@@ -157,7 +157,7 @@ input[type="checkbox"] {
     width: 16px;
     height: 16px;
     border-radius: 4px;
-    background-color: #475569; /* 스크린샷의 그 어두운 색상 */
+    background-color: white;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -166,13 +166,8 @@ input[type="checkbox"] {
     transition: background-color 0.2s;
   }
   
-  /* 체크되었을 때 (필요한 경우) */
-  input[type="checkbox"]:checked {
-    background-color: #0a58ca;
-  }
   input[type="checkbox"]:checked::after {
     content: '✔';
-    color: white;
     font-size: 10px;
   }
   
