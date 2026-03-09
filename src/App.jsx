@@ -4,7 +4,7 @@ import './App.css'
 
 function App() {
   const [selectedSchema, setSelectedSchema] = useState(null)
-  const [activeTab, setActiveTab] = useState('Fields')
+  const [activeTab, setActiveTab] = useState('File Types')
 
   // 우측 점 3개 아이콘 (Kebab menu)
   const KebabMenu = () => <span className="kebab-menu">⋮</span>
@@ -77,7 +77,7 @@ function App() {
                    <div key={field.id} className="table-row default-cursor">
                      <span className="col-check"><input type="checkbox" /></span>
                      <span className="col-name">{field.name}</span>
-                     <span className="col-type">{field.type} ⌄</span>
+                     <span className="col-type">{field.type} <span className="chevron">⌄</span></span>
                      <span className="col-desc text-gray">{field.description}</span>
                      <span className="col-action"><KebabMenu /></span>
                    </div>
@@ -118,8 +118,8 @@ function App() {
             <div className="data-view">
               <div className="tab-header">
                  <p className="tab-desc">Add files and begin reviewing. We recommend you use emails with attachments...</p>
-                 <button className="secondary-btn">Upload Files ⌄</button>
-               </div>
+                 <button className="secondary-btn">Upload Files <span className="chevron">⌄</span></button> 
+              </div>
                <div className="table-container no-border">
                  <div className="table-header">
                     <span className="col-check"><input type="checkbox" disabled/></span>

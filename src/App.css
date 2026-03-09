@@ -2,6 +2,21 @@
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 body { background-color: #ffffff; color: #333; overflow: hidden; }
 
+/* Vite 기본 #root 제약 해제 (가장 위에 추가) */
+#root {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+  
+  /* 기존 content-section은 확실하게 100%로 뻗어나가도록 수정 */
+  .content-section { 
+    width: 100%; 
+    max-width: none; 
+  }
+
 .app-layout { display: flex; flex-direction: column; height: 100vh; }
 
 /* 1. 상단 네비게이션 */
@@ -64,9 +79,33 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .breadcrumb { font-size: 16px; margin-bottom: 20px; }
 .back-link { color: #0a58ca; cursor: pointer; font-weight: 500; }
 .current-path { color: #555; font-weight: 500; }
-.tabs { display: flex; border-bottom: 1px solid #e2e8f0; margin-bottom: 24px; gap: 32px; }
-.tab { background: none; border: none; padding: 8px 0; font-size: 14px; font-weight: 500; color: #666; cursor: pointer; }
-.tab.active { color: #0a58ca; border-bottom: 2px solid #0a58ca; margin-bottom: -1px; }
+/* 기존 .tabs, .tab, .tab.active 를 찾아서 아래 코드로 완전히 교체하세요 */
+.tabs { 
+  display: flex; 
+  border-bottom: 1px solid #e2e8f0; 
+  margin-bottom: 24px; 
+  gap: 32px; 
+  align-items: flex-end; /* 탭들을 바닥에 밀착 */
+}
+
+.tab { 
+  background: none; 
+  border: none; 
+  padding: 10px 0 12px 0; 
+  font-size: 14px; 
+  font-weight: 500; 
+  color: #64748b; 
+  cursor: pointer; 
+  border-bottom: 3px solid transparent; /* 평소엔 투명한 두꺼운 밑줄 */
+  margin-bottom: -1px; /* 부모의 border-bottom과 겹치게 내림 */
+  transition: all 0.2s;
+}
+
+.tab.active { 
+  color: #0a58ca; 
+  font-weight: 600; /* 볼드체 적용 */
+  border-bottom: 3px solid #0a58ca; /* 두꺼운 파란색 밑줄 */
+}
 
 /* 상세 탭 상단 헤더 */
 .tab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
@@ -84,7 +123,16 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 /* 테이블 열(Column) 너비 배분 */
 .col-main { flex: 2; font-weight: 500; }
 .col-name { flex: 1.5; font-weight: 500; }
-.col-type { flex: 1; color: #555; }
+/* 기존 .col-type을 찾아서 아래처럼 변경하세요 */
+.col-type { 
+    flex: 1; 
+    color: #555; 
+    display: flex; 
+    align-items: center; /* 수직 중앙 정렬의 핵심! */
+    gap: 4px; /* 글자와 쉐브론 사이 간격 */
+  }
+  
+
 .col-desc { flex: 2.5; }
 .col-job { flex: 2; font-weight: 500; }
 .col-date { flex: 1; }
@@ -101,3 +149,42 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
 .badge.ready { background: #fff3cd; color: #856404; }
 .badge.confirmed { background: #d1e7dd; color: #0f5132; }
+
+/* App.css 파일 맨 아래에 이 코드를 추가하세요 */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background-color: #475569; /* 스크린샷의 그 어두운 색상 */
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    transition: background-color 0.2s;
+  }
+  
+  /* 체크되었을 때 (필요한 경우) */
+  input[type="checkbox"]:checked {
+    background-color: #0a58ca;
+  }
+  input[type="checkbox"]:checked::after {
+    content: '✔';
+    color: white;
+    font-size: 10px;
+  }
+  
+  /* 비활성화(disabled) 되었을 때 */
+  input[type="checkbox"]:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+    /* App.css 맨 아래에 추가: 쉐브론의 미세한 위치를 잡아주는 클래스 */
+    .chevron {
+        font-size: 14px;
+        position: relative;
+        top: -2px; /* 살짝 위로 올려서 글자와 완벽하게 맞춤 */
+      }
