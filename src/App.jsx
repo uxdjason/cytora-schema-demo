@@ -83,60 +83,73 @@ function App() {
                     <span className="col-desc">DESCRIPTION</span>
                     <span className="col-action"></span>
                  </div>
-                 {mockDatabase.fields.filter(f => f.schemaId === selectedSchema.id).map(field => (
-                   <React.Fragment key={field.id}>
-                     {/* 메인 필드 행 */}
-                     <div className="table-row default-cursor">
-                       <span className="col-check"><input type="checkbox" /></span>
-                       <span className="col-name">{field.name}</span>
-                       
-                       {/* 👇 클릭 영역이 텍스트 전체로 확장된 col-type 부분 👇 */}
-                       <span 
-                         className="col-type" 
-                         style={field.subFields ? { cursor: 'pointer', userSelect: 'none' } : {}}
-                         onClick={(e) => {
-                           if (field.subFields) toggleField(e, field.id)
-                         }}
-                       >
-                         {field.type} 
+                 {mockDatabase.fields.filter(f => f.schemaId === selectedSchema.id).map(field => {
+                   
+                   // 💡 동적 타입 계산 로직 추가
+                   // 하위 필드들이 있는지 확인하고, 모든 하위 필드의 타입이 같다면 그 타입으로, 다르면 'Composite'으로 표시
+                   let displayType = field.type;
+                   if (field.subFields && field.subFields.length > 0) {
+                     const firstSubType = field.subFields[0].type;
+                     const allSameType = field.subFields.every(sub => sub.type === firstSubType);
+                     displayType = allSameType ? firstSubType : 'Composite';
+                   }
+
+                   return (
+                     <React.Fragment key={field.id}>
+                       {/* 메인 필드 행 */}
+                       <div className="table-row default-cursor">
+                         <span className="col-check"><input type="checkbox" /></span>
+                         <span className="col-name">{field.name}</span>
                          
-                         {/* subFields가 있는 경우 (아코디언 토글용 쉐브론) */}
-                         {field.subFields && (
-                           <span 
-                             className="chevron" 
-                             style={{ 
-                               display: 'inline-block', 
-                               transform: expandedFields[field.id] ? 'rotate(180deg)' : 'none', 
-                               transition: 'transform 0.2s',
-                               marginLeft: '4px'
-                             }}
-                           >
-                             ⌄
-                           </span>
-                         )}
+                         {/* 클릭 영역이 텍스트 전체로 확장된 col-type 부분 */}
+                         <span 
+                           className="col-type" 
+                           style={field.subFields ? { cursor: 'pointer', userSelect: 'none' } : {}}
+                           onClick={(e) => {
+                             if (field.subFields) toggleField(e, field.id)
+                           }}
+                         >
+                           {/* 기존 field.type 대신 동적으로 계산된 displayType 출력 */}
+                           {displayType} 
+                           
+                           {/* subFields가 있는 경우 (아코디언 토글용 쉐브론) */}
+                           {field.subFields && (
+                             <span 
+                               className="chevron" 
+                               style={{ 
+                                 display: 'inline-block', 
+                                 transform: expandedFields[field.id] ? 'rotate(180deg)' : 'none', 
+                                 transition: 'transform 0.2s',
+                                 marginLeft: '4px'
+                               }}
+                             >
+                               ⌄
+                             </span>
+                           )}
+                           
+                           {/* subFields가 없을 때 (기존 Dropdown, True/False 쉐브론 유지) */}
+                           {!field.subFields && (field.type === 'Dropdown' || field.type === 'True/False') && (
+                             <span className="chevron" style={{ marginLeft: '4px' }}>⌄</span>
+                           )}
+                         </span>
                          
-                         {/* subFields가 없을 때 (기존 Dropdown, True/False 쉐브론 유지) */}
-                         {!field.subFields && (field.type === 'Dropdown' || field.type === 'True/False') && (
-                           <span className="chevron" style={{ marginLeft: '4px' }}>⌄</span>
-                         )}
-                       </span>
-                       
-                       <span className="col-desc text-gray">{field.description}</span>
-                       <span className="col-action"><KebabMenu /></span>
-                     </div>
-                     
-                     {/* 하위 필드 (subFields) 렌더링 - expandedFields 상태가 true일 때만 보임 */}
-                     {field.subFields && expandedFields[field.id] && field.subFields.map(sub => (
-                       <div key={sub.id} className="table-row default-cursor" style={{ backgroundColor: '#f8fafc' }}>
-                         <span className="col-check"></span> {/* 들여쓰기 효과를 위해 빈칸 유지 */}
-                         <span className="col-name" style={{ paddingLeft: '24px', color: '#64748b' }}>↳ {sub.name}</span>
-                         <span className="col-type" style={{ fontSize: '12px' }}>{sub.type}</span>
-                         <span className="col-desc text-gray" style={{ fontSize: '12px' }}>{sub.description}</span>
-                         <span className="col-action"></span>
+                         <span className="col-desc text-gray">{field.description}</span>
+                         <span className="col-action"><KebabMenu /></span>
                        </div>
-                     ))}
-                   </React.Fragment>
-                 ))}
+                       
+                       {/* 하위 필드 (subFields) 렌더링 - expandedFields 상태가 true일 때만 보임 */}
+                       {field.subFields && expandedFields[field.id] && field.subFields.map(sub => (
+                         <div key={sub.id} className="table-row default-cursor" style={{ backgroundColor: '#f8fafc' }}>
+                           <span className="col-check"></span> {/* 들여쓰기 효과를 위해 빈칸 유지 */}
+                           <span className="col-name" style={{ paddingLeft: '24px', color: '#64748b' }}>↳ {sub.name}</span>
+                           <span className="col-type" style={{ fontSize: '12px' }}>{sub.type}</span>
+                           <span className="col-desc text-gray" style={{ fontSize: '12px' }}>{sub.description}</span>
+                           <span className="col-action"></span>
+                         </div>
+                       ))}
+                     </React.Fragment>
+                   );
+                 })}
                </div>
             </div>
           )}
@@ -216,7 +229,7 @@ function App() {
             <span>Files</span>
             <span>Analytics</span>
           </div>
-          {/* 데모 안내 문구 (빨간색 적용) */}
+          {/* 데모 안내 문구 */}
           <span className="demo-disclaimer" style={{ color: 'red' }}>
             Disclaimer: This is a technical mockup built for an interview, not the real Cytora platform.
           </span>
