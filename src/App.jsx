@@ -89,29 +89,38 @@ function App() {
                      <div className="table-row default-cursor">
                        <span className="col-check"><input type="checkbox" /></span>
                        <span className="col-name">{field.name}</span>
-                       <span className="col-type">
+                       
+                       {/* 👇 클릭 영역이 텍스트 전체로 확장된 col-type 부분 👇 */}
+                       <span 
+                         className="col-type" 
+                         style={field.subFields ? { cursor: 'pointer', userSelect: 'none' } : {}}
+                         onClick={(e) => {
+                           if (field.subFields) toggleField(e, field.id)
+                         }}
+                       >
                          {field.type} 
-                         {/* subFields가 있는 경우에만 클릭 가능한 쉐브론 표시 */}
+                         
+                         {/* subFields가 있는 경우 (아코디언 토글용 쉐브론) */}
                          {field.subFields && (
                            <span 
                              className="chevron" 
                              style={{ 
-                               cursor: 'pointer', 
                                display: 'inline-block', 
                                transform: expandedFields[field.id] ? 'rotate(180deg)' : 'none', 
                                transition: 'transform 0.2s',
                                marginLeft: '4px'
                              }}
-                             onClick={(e) => toggleField(e, field.id)}
                            >
                              ⌄
                            </span>
                          )}
-                         {/* subFields가 없을 때 기존 Dropdown, True/False 쉐브론 유지 */}
+                         
+                         {/* subFields가 없을 때 (기존 Dropdown, True/False 쉐브론 유지) */}
                          {!field.subFields && (field.type === 'Dropdown' || field.type === 'True/False') && (
                            <span className="chevron" style={{ marginLeft: '4px' }}>⌄</span>
                          )}
                        </span>
+                       
                        <span className="col-desc text-gray">{field.description}</span>
                        <span className="col-action"><KebabMenu /></span>
                      </div>
@@ -208,7 +217,7 @@ function App() {
             <span>Analytics</span>
           </div>
           {/* 데모 안내 문구 (빨간색 적용) */}
-          <span className="demo-disclaimer">
+          <span className="demo-disclaimer" style={{ color: 'red' }}>
             Disclaimer: This is a technical mockup built for an interview, not the real Cytora platform.
           </span>
         </div>
