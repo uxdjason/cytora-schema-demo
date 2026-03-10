@@ -1,13 +1,23 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { mockDatabase } from './mockData'
 import './App.css'
 
 function App() {
   const [selectedSchema, setSelectedSchema] = useState(null)
   const [activeTab, setActiveTab] = useState('File Types')
+  const [expandedFields, setExpandedFields] = useState({}) // 계층형 데이터 열림/닫힘 상태
 
   // 우측 점 3개 아이콘 (Kebab menu)
   const KebabMenu = () => <span className="kebab-menu">⋮</span>
+
+  // 필드 펼치기/접기 토글 함수
+  const toggleField = (e, fieldId) => {
+    e.stopPropagation(); // 행 전체 클릭 이벤트와 겹치는 것을 방지
+    setExpandedFields(prev => ({
+      ...prev,
+      [fieldId]: !prev[fieldId]
+    }))
+  }
 
   const renderSchemaList = () => (
     <div className="content-section">
@@ -74,13 +84,49 @@ function App() {
                     <span className="col-action"></span>
                  </div>
                  {mockDatabase.fields.filter(f => f.schemaId === selectedSchema.id).map(field => (
-                   <div key={field.id} className="table-row default-cursor">
-                     <span className="col-check"><input type="checkbox" /></span>
-                     <span className="col-name">{field.name}</span>
-                     <span className="col-type">{field.type} <span className="chevron">⌄</span></span>
-                     <span className="col-desc text-gray">{field.description}</span>
-                     <span className="col-action"><KebabMenu /></span>
-                   </div>
+                   <React.Fragment key={field.id}>
+                     {/* 메인 필드 행 */}
+                     <div className="table-row default-cursor">
+                       <span className="col-check"><input type="checkbox" /></span>
+                       <span className="col-name">{field.name}</span>
+                       <span className="col-type">
+                         {field.type} 
+                         {/* subFields가 있는 경우에만 클릭 가능한 쉐브론 표시 */}
+                         {field.subFields && (
+                           <span 
+                             className="chevron" 
+                             style={{ 
+                               cursor: 'pointer', 
+                               display: 'inline-block', 
+                               transform: expandedFields[field.id] ? 'rotate(180deg)' : 'none', 
+                               transition: 'transform 0.2s',
+                               marginLeft: '4px'
+                             }}
+                             onClick={(e) => toggleField(e, field.id)}
+                           >
+                             ⌄
+                           </span>
+                         )}
+                         {/* subFields가 없을 때 기존 Dropdown, True/False 쉐브론 유지 */}
+                         {!field.subFields && (field.type === 'Dropdown' || field.type === 'True/False') && (
+                           <span className="chevron" style={{ marginLeft: '4px' }}>⌄</span>
+                         )}
+                       </span>
+                       <span className="col-desc text-gray">{field.description}</span>
+                       <span className="col-action"><KebabMenu /></span>
+                     </div>
+                     
+                     {/* 하위 필드 (subFields) 렌더링 - expandedFields 상태가 true일 때만 보임 */}
+                     {field.subFields && expandedFields[field.id] && field.subFields.map(sub => (
+                       <div key={sub.id} className="table-row default-cursor" style={{ backgroundColor: '#f8fafc' }}>
+                         <span className="col-check"></span> {/* 들여쓰기 효과를 위해 빈칸 유지 */}
+                         <span className="col-name" style={{ paddingLeft: '24px', color: '#64748b' }}>↳ {sub.name}</span>
+                         <span className="col-type" style={{ fontSize: '12px' }}>{sub.type}</span>
+                         <span className="col-desc text-gray" style={{ fontSize: '12px' }}>{sub.description}</span>
+                         <span className="col-action"></span>
+                       </div>
+                     ))}
+                   </React.Fragment>
                  ))}
                </div>
             </div>
@@ -118,8 +164,8 @@ function App() {
             <div className="data-view">
               <div className="tab-header">
                  <p className="tab-desc">Add files and begin reviewing. We recommend you use emails with attachments...</p>
-                 <button className="secondary-btn">Upload Files <span className="chevron">⌄</span></button> 
-              </div>
+                 <button className="secondary-btn">Upload Files <span className="chevron">⌄</span></button>
+               </div>
                <div className="table-container no-border">
                  <div className="table-header">
                     <span className="col-check"><input type="checkbox" disabled/></span>
@@ -161,7 +207,10 @@ function App() {
             <span>Files</span>
             <span>Analytics</span>
           </div>
-          <span className="demo-disclaimer">Disclaimer: This is a technical mockup built for an interview, not the real Cytora platform.</span>
+          {/* 데모 안내 문구 (빨간색 적용) */}
+          <span className="demo-disclaimer">
+            Disclaimer: This is a technical mockup built for an interview, not the real Cytora platform.
+          </span>
         </div>
         <div className="nav-right">
           <div className="search-bar">
