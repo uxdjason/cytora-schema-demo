@@ -1,8 +1,8 @@
-/* 기본 리셋 */
+/* Basic settings */
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 body { background-color: #ffffff; color: #333; overflow: hidden; }
 
-/* Vite 기본 #root 제약 해제 (가장 위에 추가) */
+/* Removes the default #root constraint in Vite (added at the top) */
 #root {
     max-width: none !important;
     width: 100% !important;
@@ -11,7 +11,7 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
     text-align: left !important;
   }
   
-  /* 기존 content-section은 확실하게 100%로 뻗어나가도록 수정 */
+  /* Updates the existing content section to stretch fully to 100% width */
   .content-section { 
     width: 100%; 
     max-width: none; 
@@ -19,7 +19,7 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 
 .app-layout { display: flex; flex-direction: column; height: 100vh; }
 
-/* 1. 상단 네비게이션 */
+/* Top navigation */
 .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 0 24px; height: 56px; border-bottom: 1px solid #e2e8f0; }
 .nav-left, .nav-right { display: flex; align-items: center; }
 .logo { font-size: 22px; font-weight: 500; color: #5c6c7c; margin-right: 32px; letter-spacing: -0.5px; }
@@ -33,7 +33,7 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
     border-radius: 4px; 
     padding: 4px 8px; 
     margin-right: 24px; 
-    background-color: #ffffff; /* 배경색 하얀색으로 명시 */
+    background-color: #ffffff; 
   }
   
   .search-bar input { 
@@ -42,17 +42,17 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
     font-size: 12px; 
     width: 180px; 
     color: #333; 
-    background-color: transparent; /* 기본 다크모드 스타일 무시하고 투명하게 */
-    color-scheme: light; /* 브라우저 다크모드 강제 해제 */
+    background-color: transparent; /* Overrides the default dark mode styles and keeps the background transparent */
+    color-scheme: light; /* Disables browser dark mode enforcement */
   }
 .search-icon { font-size: 12px; color: #999; }
 .user-profile { display: flex; align-items: center; font-size: 13px; color: #555; }
 .avatar { background-color: #0d6efd; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 11px; margin-left: 12px; font-weight: bold; }
 
-/* 2. 본문 레이아웃 (사이드바 + 메인) */
+/* Main body layout (side bar + main) */
 .main-body { display: flex; flex: 1; overflow: hidden; }
 
-/* 좌측 사이드바 */
+/* LH side-bar */
 .sidebar { width: 220px; border-right: 1px solid #e2e8f0; background: #fafbfc; display: flex; flex-direction: column; }
 .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #e2e8f0; }
 .sidebar-header h3 { font-size: 16px; font-weight: 600; color: #333; }
@@ -63,29 +63,29 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .menu-group li { padding: 8px 20px 8px 36px; font-size: 13px; cursor: pointer; color: #555; }
 .menu-group li.active { background: #eef2f6; color: #0a58ca; font-weight: 600; border-left: 3px solid #0a58ca; }
 
-/* 메인 콘텐츠 영역 */
+/* Main content area */
 .main-content { flex: 1; padding: 24px 32px; overflow-y: auto; background: white; }
 .content-section { max-width: 100%; }
 .section-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
 .content-section h2 { font-size: 20px; font-weight: 500; color: #333; margin-bottom: 8px; }
 .subtitle { color: #666; font-size: 13px; line-height: 1.5; max-width: 100%; }
 
-/* 버튼 스타일 */
+/* Button styles */
 .primary-btn { background: #0d6efd; color: white; border: none; padding: 8px 16px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; }
 .secondary-btn { background: white; color: #0d6efd; border: 1px solid #e2e8f0; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: 500; }
 .outline-btn { background: white; color: #555; border: 1px solid #ccc; padding: 4px 10px; border-radius: 4px; font-size: 12px; margin-right: 12px; cursor: pointer; }
 
-/* 브레드크럼 & 탭 */
+/* Breadcrumb & tab */
 .breadcrumb { font-size: 16px; margin-bottom: 20px; }
 .back-link { color: #0a58ca; cursor: pointer; font-weight: 500; }
 .current-path { color: #555; font-weight: 500; }
-/* 기존 .tabs, .tab, .tab.active 를 찾아서 아래 코드로 완전히 교체하세요 */
+
 .tabs { 
   display: flex; 
   border-bottom: 1px solid #e2e8f0; 
   margin-bottom: 24px; 
   gap: 32px; 
-  align-items: flex-end; /* 탭들을 바닥에 밀착 */
+  align-items: flex-end; /* Aligns the tabs flush with the bottom */
 }
 
 .tab { 
@@ -96,23 +96,23 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
   font-weight: 500; 
   color: #64748b; 
   cursor: pointer; 
-  border-bottom: 3px solid transparent; /* 평소엔 투명한 두꺼운 밑줄 */
-  margin-bottom: -1px; /* 부모의 border-bottom과 겹치게 내림 */
+  border-bottom: 3px solid transparent; 
+  margin-bottom: -1px; /* Offsets them to overlap with the parent’s border-bottom */
   transition: all 0.2s;
 }
 
 .tab.active { 
   color: #0a58ca; 
-  font-weight: 600; /* 볼드체 적용 */
-  border-bottom: 3px solid #0a58ca; /* 두꺼운 파란색 밑줄 */
+  font-weight: 600; 
+  border-bottom: 3px solid #0a58ca; 
 }
 
-/* 상세 탭 상단 헤더 */
+/* Details tab - upper header */
 .tab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .tab-desc { font-size: 13px; color: #666; }
 .action-buttons { display: flex; gap: 8px; }
 
-/* 테이블 (스크린샷 싱크로율 99%) */
+/* Table */
 .table-container { border: 1px solid #e2e8f0; border-radius: 4px; }
 .table-container.no-border { border: none; border-top: 1px solid #e2e8f0; border-radius: 0; }
 .table-header { display: flex; padding: 12px 16px; font-size: 11px; font-weight: 600; color: #888; border-bottom: 1px solid #e2e8f0; text-transform: uppercase; }
@@ -120,16 +120,15 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .table-row:hover { background: #f8fafc; }
 .table-row.default-cursor { cursor: default; }
 
-/* 테이블 열(Column) 너비 배분 */
+/* Table column width adjustment */
 .col-main { flex: 2; font-weight: 500; }
 .col-name { flex: 1.5; font-weight: 500; }
-/* 기존 .col-type을 찾아서 아래처럼 변경하세요 */
 .col-type { 
     flex: 1; 
     color: #555; 
     display: flex; 
-    align-items: center; /* 수직 중앙 정렬의 핵심! */
-    gap: 4px; /* 글자와 쉐브론 사이 간격 */
+    align-items: center; 
+    gap: 4px; /* between the letter and downward chevron */
   }
   
 
@@ -141,7 +140,7 @@ body { background-color: #ffffff; color: #333; overflow: hidden; }
 .col-action { width: 200px; text-align: right; display: flex; justify-content: flex-end; align-items: center; }
 .col-check { width: 40px; }
 
-/* 유틸리티 클래스 */
+/* Utility class */
 .text-blue { color: #0a58ca; }
 .text-gray { color: #666; }
 .kebab-menu { font-size: 18px; color: #999; cursor: pointer; font-weight: bold; margin-left: 8px; }
@@ -156,7 +155,7 @@ input[type="checkbox"] {
     width: 16px;
     height: 16px;
     border-radius: 4px;
-    border: 1px solid #94a3b8; /* 테두리 두께 1px, 실선(solid), 약간 부드러운 회색 */
+    border: 1px solid #94a3b8; 
     background-color: white;
     cursor: pointer;
     display: inline-flex;
@@ -166,10 +165,9 @@ input[type="checkbox"] {
     transition: all 0.2s;
 }
 
-/* 체크되었을 때의 스타일 유지 */
 input[type="checkbox"]:checked {
     background-color: #0a58ca;
-    border-color: #0a58ca; /* 체크되면 테두리 색상도 파란색으로 통일 */
+    border-color: #0a58ca; 
 }
 
 input[type="checkbox"]:checked::after {
@@ -178,19 +176,17 @@ input[type="checkbox"]:checked::after {
     font-size: 10px;
 }
   
-  /* 비활성화(disabled) 되었을 때 */
-  input[type="checkbox"]:disabled {
+input[type="checkbox"]:disabled {
     opacity: 0.4;
     cursor: not-allowed;
-  }
+}
   
-    /* App.css 맨 아래에 추가: 쉐브론의 미세한 위치를 잡아주는 클래스 */
-    .chevron {
-        font-size: 14px;
-        position: relative;
-        top: -2px; /* 살짝 위로 올려서 글자와 완벽하게 맞춤 */
-      }
-      .demo-disclaimer {
-        /* ... 다른 속성들 ... */
-        color: red; /* 기존 색상을 red로 변경! */
-      }
+.chevron {
+    font-size: 14px;
+    position: relative;
+    top: -2px; 
+}
+
+.demo-disclaimer {
+    color: red; 
+}
